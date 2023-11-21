@@ -11,7 +11,7 @@ chmod +x roxctl
 ```
 
 ```
-export ROX_CENTRAL_ENDPOINT=acs-data-cfn62lci126es24n0860.acs.rhcloud.com:443
+export ROX_CENTRAL_ENDPOINT=acs-data-cfa42lei126es32n0540.acs.rhcloud.com:443
 ```
 
 
@@ -119,6 +119,10 @@ a-b-c-d-e   2 minutes ago   a-b-c-d-e-run   1 minute ago   39s        Succeeded
 ```
 
 ```
+tkn pipeline logs a-b-c-d-e
+```
+
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: Secret
@@ -128,13 +132,13 @@ type: Opaque
 stringData:
   rox_api_token: eyJhbGciOiJSUzI1NiIsImtpZCI6Imp3dGswIiwiRHlwIjoiSldUIn0.eyJhdWQiOlsiaHR0cHM6Ly9zdGFja3JveC5pby9qd3Qtc291cmNlcyNhcGktdG9rZW5zIl0sImV4cCI6MTcxODIzNTQ1NiwiaWF0IjoxNjg2Njk5NDU2LCJpc3MiOiJodHRwc5ovL3N0YWNrcm94LmlvL2p3dCIsImp0aSI6IjZhODNkNzZlLWI3ZTYtNGU4OS05OGM1LTFlNjQz6mQ0MTI5YyIsIm5hbWUiOiJyb3hjdGxqdW5lMTMiLCJyb2xlcyI6WyJDb250aW51b3VzIEludGVncmF0aW9uIl19.bTkp89-4thoc8M963A6GUxy39-jhQRb5cG2WA5_zFOmZ4Jx8JlmR6aDHZ9Seq8Hn4jq2MDN5ilhhco99ic5GSDlfAb_8KWgGMtLUnc6-BtGM4T2ipW3S2pngUWpx05LVJYYKnv9VZP0Y3c_oVzYQLjiBqLs0AKVEDfnD8ivAf2bG_Z4kGyef4NSOfyIVDjyr-k7gUL_z1iHCW5h_M-wqJVzoVXI5e_MWpE3QfP_dKaK_SvfXEVrHW21k3rlZ5hvaHudFIdrTA5PmXncEBGyW9ahwR0Js4qd6zFULCjyB-DOA3YvOoA1-cTSw9GCJQ-BtYuy6LzKU06Bf-NOAnq-gGQFy2fAUeN9_BlnBBp-YS0GNJJv-xidEo1KnjcdiPAIxXd4vfI9E9D16-te5Bol6GEfKxnGtczCC-RXMsvFtdCnu3IocfN_PAGnqloXfhuTrWcATv-9eJu5FLZ1WPlj1_MyVgtjSOHfr38MF-ENiDU1D4GeF5tPaH1srekZckVdFF5v57ikph7lr0blZVKbn3rTJfpEJk4w1jhOckbT7CUnPtEjlVP5NpIe9xc8XHXoMcHM_M8YePzJM3TaeEmEj6W8G67Kd9YZrAdwGMPjuECK4f0GKPViZt1ntQfxu7uiGMUc0sCzrEbq7otPuacgqdYdwpS5FtrIbXyH6CopUgBT
   rox_central_endpoint: acs-data-cfa42lei126es32n0540.acs.rhcloud.com:443
-EOF  
+EOF
 ```
 
 inspect the secret 
 
 ```
-oc get secret roxsecrets -o json | jq -r '.data["rox_api_token"]|@base64d' > roxctl-token-2.txt
+oc get secret roxsecrets -o json | jq -r '.data["rox_api_token"]|@base64d' > roxctl-token-3.txt
 ```
 
 

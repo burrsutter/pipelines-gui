@@ -35,7 +35,7 @@ spec:
         chmod +x ./roxctl 
         echo "roxctl version"
         ./roxctl version
-        echo "image from pipeline: " $(params.image)@$(params.image_digest)
+        echo "image from pipeline: " 
         echo "hard coding the image for now"
         ./roxctl image scan --insecure-skip-tls-verify -e $ROX_CENTRAL_ENDPOINT --image quay.io/bsutter/quarkus-demo:v2 --output json  > roxctl_output.json
         more roxctl_output.json
@@ -45,5 +45,5 @@ spec:
         high: (.result.summary.IMPORTANT),
         medium: (.result.summary.MODERATE),
         low: (.result.summary.LOW)
-        }}" roxctl_output.json | tee $(results.SCAN_RESULT.path)
+        }}" roxctl_output.json | tee $(results.SCAN_OUTPUT.path)
 
