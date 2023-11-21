@@ -37,7 +37,7 @@ spec:
         ./roxctl version
         echo "image from pipeline: " 
         echo "hard coding the image for now"
-        ./roxctl image scan --insecure-skip-tls-verify -e $ROX_CENTRAL_ENDPOINT --image quay.io/bsutter/quarkus-demo:v2 --output json  > roxctl_output.json
+        ./roxctl image scan --insecure-skip-tls-verify -e $ROX_CENTRAL_ENDPOINT --image quay.io/bsutter/partnercatalog:v1 --output json  > roxctl_output.json
         more roxctl_output.json
         jq -rce \
         "{vulnerabilities:{

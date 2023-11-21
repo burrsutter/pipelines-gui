@@ -1,4 +1,7 @@
 
+
+![Pipelines GUI](/images/pipelines-gui-1.png)
+
 https://gist.github.com/spadgett/18538b6a16a97a7b580c828c47053d0d
 
 # roxctl
@@ -177,7 +180,6 @@ spec:
               name: roxsecrets
       script: |
         #!/bin/sh
-        echo "jq with roxctl Karthik"
         echo "ROX_API_TOKEN: " $ROX_API_TOKEN
         echo "ROX_CENTRAL_ENDPOINT: " $ROX_CENTRAL_ENDPOINT
         jq --version
@@ -253,7 +255,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: a-b-roxctl-d-e-run4
+  name: a-b-roxctl-d-e-run7
 spec:
   pipelineRef:
     name: a-b-roxctl-d-e
