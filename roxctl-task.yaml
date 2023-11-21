@@ -1,0 +1,49 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: roxctl
+  annotations:
+    task.output.location: results
+    task.results.format: application/json
+    task.results.key: SCAN_OUTPUT  
+spec:
+  results:
+    - description: The common vulnerabilities and exposures (CVE) result format
+      name: SCAN_OUTPUT
+      type: string
+  steps:
+    - name: roxctl
+      image: quay.io/lrangine/crda-maven:11.0
+      env:
+        - name: ROX_CENTRAL_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              key: rox_central_endpoint            
+              name: roxsecrets
+        - name: ROX_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: rox_api_token            
+              name: roxsecrets
+      script: |
+        #!/bin/sh
+        echo "jq with roxctl Karthik"
+        echo "ROX_API_TOKEN: " $ROX_API_TOKEN
+        echo "ROX_CENTRAL_ENDPOINT: " $ROX_CENTRAL_ENDPOINT
+        jq --version
+        curl -k -L -H "Authorization: Bearer $ROX_API_TOKEN" https://$ROX_CENTRAL_ENDPOINT/api/cli/download/roxctl-linux --output ./roxctl
+        chmod +x ./roxctl 
+        echo "roxctl version"
+        ./roxctl version
+        echo "image from pipeline: " $(params.image)@$(params.image_digest)
+        echo "hard coding the image for now"
+        ./roxctl image scan --insecure-skip-tls-verify -e $ROX_CENTRAL_ENDPOINT --image quay.io/bsutter/quarkus-demo:v2 --output json  > roxctl_output.json
+        more roxctl_output.json
+        jq -rce \
+        "{vulnerabilities:{
+        critical: (.result.summary.CRITICAL),
+        high: (.result.summary.IMPORTANT),
+        medium: (.result.summary.MODERATE),
+        low: (.result.summary.LOW)
+        }}" roxctl_output.json | tee $(results.SCAN_RESULT.path)
+

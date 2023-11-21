@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: a-b-roxctl-d-e
+spec:
+  results:
+    - description: The common vulnerabilities and exposures (CVE) result
+      name: SCAN_OUTPUT
+      value: $(tasks.roxctl.results.SCAN_OUTPUT)
+  tasks:
+    - name: a
+      taskRef:
+        name: myjq
+    - name: b
+      runAfter:
+        - a
+      taskRef:
+        name: myjq
+    - name: roxctl
+      runAfter:
+        - b
+      taskRef:
+        name: roxctl
+    - name: d
+      runAfter:
+        - roxctl
+      taskRef:
+        name: myjq
+    - name: e
+      runAfter:
+        - d
+      taskRef:
+        name: myjq
+
