@@ -4,3 +4,5 @@ roxctl-token-3.txt
 roxctl-endpoint.txt
 cosign-remote.pub
 roxctl
+.kube
+roxsecrets.yaml

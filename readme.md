@@ -8,6 +8,10 @@ https://gist.github.com/spadgett/18538b6a16a97a7b580c828c47053d0d
 
 ## roxctl as CLI
 
+How to install and how to acquire your endpoint and token
+
+https://docs.openshift.com/acs/3.66/cli/getting-started-cli.html
+
 ```
 curl -O https://mirror.openshift.com/pub/rhacs/assets/latest/bin/darwin/roxctl
 chmod +x roxctl
@@ -16,7 +20,6 @@ chmod +x roxctl
 ```
 export ROX_CENTRAL_ENDPOINT=acs-data-cfa42lei126es32n0540.acs.rhcloud.com:443
 ```
-
 
 
 ```
@@ -126,6 +129,16 @@ tkn pipeline logs a-b-c-d-e
 ```
 
 ```
+kubectl apply -f roxsecrets.yaml
+```
+
+OR
+
+modify for your roxctl endpoint and API_token
+
+
+
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: Secret
@@ -141,7 +154,7 @@ EOF
 inspect the secret 
 
 ```
-oc get secret roxsecrets -o json | jq -r '.data["rox_api_token"]|@base64d' > roxctl-token-3.txt
+oc get secret roxsecrets -o json | jq -r '.data["rox_api_token"]|@base64d' > roxctl-token-2.txt
 ```
 
 
