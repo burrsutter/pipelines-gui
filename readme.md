@@ -275,11 +275,50 @@ spec:
 EOF
 ```
 
+# View SBOM
 
+syft
+
+https://gist.github.com/karthikjeeyar/4957a1cbb8437abe0d32f43b43a2b6c4
+
+In RHTAP-internal today
+
+https://github.com/redhat-appstudio/build-definitions/blob/main/task/buildah/0.1/buildah.yaml
+
+      syft dir:$(workspaces.source.path)/source --output cyclonedx-json=$(workspaces.source.path)/sbom-source.json
+      find $(cat /workspace/container_path) -xtype l -delete
+      syft dir:$(cat /workspace/container_path) --output cyclonedx-json=$(workspaces.source.path)/sbom-image.json
+
+
+```
+oc apply -f sbom-task.yaml
+```
+
+```
+tkn task ls
+NAME        DESCRIPTION   AGE
+myjq                      1 hour ago
+roxctl                    53 minutes ago
+sbom-task                 3 seconds ago
+```
+
+```
+oc apply -f sbom-pipelinerun.yaml
+```
+
+## SBOMs and CVEs
+
+```
+
+```
 
 # Chains
 
-Check the configuration of Chains
+Check the configuration of Chains.  As of Nov 21 2023, each PipelineRun is annotated with `signed` even if Chains is not yet configured.
+
+https://issues.redhat.com/browse/SRVKP-3790
+
+https://github.com/tektoncd/chains/issues/858
 
 ```
 oc get tektonconfig -ojson | jq '.items[0].spec.chain'

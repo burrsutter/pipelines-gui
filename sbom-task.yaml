@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: sbom-task
+  annotations: 
+    task.output.location: results
+    task.results.format: application/text
+    task.results.key: LINK_TO_SBOM
+spec:
+  results:
+      - name: LINK_TO_SBOM
+        description: Contains the SBOM link
+  steps:
+    - name: print-sbom-results
+      image: quay.io/redhat-appstudio/syft:v0.96.0
+      script: |
+        #!/bin/sh
+        syft version
+        syft quay.io/bsutter/quarkus-demo:v2 --output cyclonedx-json=sbom-image.json
+        echo 'BEGIN SBOM'
+        cat sbom-image.json
+        echo 'END SBOM'
+        echo 'quay.io/redhat-user-workloads/karthik-jk-tenant/node-express-hello/node-express-hello:build-8e536-1692702836' | tee $(results.LINK_TO_SBOM.path)

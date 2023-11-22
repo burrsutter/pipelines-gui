@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: pipelinerun-with-sbom-roxctl-tasks
+spec:
+  pipelineSpec:
+    tasks:
+      - name: sbom-task
+        taskRef:
+          name: sbom-task
+      - name: roxctl
+        runAfter:
+         - sbom-task
+        taskRef:
+          name: roxctl          
+    results:
+    - name: LINK_TO_SBOM
+      description:  Contains the SBOM link
+      value: $(tasks.sbom-task.results.LINK_TO_SBOM)
+    - name: SCAN_OUTPUT
+      description: The common vulnerabilities and exposures (CVE) result
+      value: $(tasks.roxctl.results.SCAN_OUTPUT)

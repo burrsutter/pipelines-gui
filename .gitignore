@@ -6,3 +6,4 @@ cosign-remote.pub
 roxctl
 .kube
 roxsecrets.yaml
+sbom-image.json
